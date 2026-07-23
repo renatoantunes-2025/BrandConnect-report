@@ -33,4 +33,18 @@ export type Post = {
   comments: number;
   saves: number;
   updated_at: string;
+  format: string | null;
+  product_theme: string | null;
+  category: string | null;
+  is_repost: boolean;
+  profile_visits: number | null;
+  link_clicks: number | null;
+  notes: string | null;
+};
+
+export type EditorialPost = Post & {
+  social_accounts: {
+    platform: SocialAccount["platform"];
+    username: string | null;
+  };
 };

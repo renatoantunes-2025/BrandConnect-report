@@ -24,7 +24,8 @@ export async function createClientRecord(formData: FormData) {
       slug = `${baseSlug}-${attempt + 2}`;
       continue;
     }
-    return { error: "Não foi possível criar o cliente." };
+    console.error("createClientRecord failed:", error);
+    return { error: `Não foi possível criar o cliente: ${error.message}` };
   }
 
   return { error: "Não foi possível gerar um identificador único para o cliente." };
