@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { computeInteractions, formatMonthLabel } from "@/lib/editorial";
 import { currentMonth, isValidMonth, monthBounds, shiftMonth } from "@/lib/months";
+import { resolveAccountId } from "@/lib/resolveAccount";
 import { MonthPicker } from "./month-picker";
 import { OverviewStats, type StatTileInput } from "./overview-stats";
 
@@ -76,12 +77,23 @@ export default async function VisaoGeralPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ accountId: string }>;
-  searchParams: Promise<{ month?: string }>;
+  params: Promise<{ clientId: string }>;
+  searchParams: Promise<{ month?: string; account?: string }>;
 }) {
-  const { accountId } = await params;
-  const { month: monthParam } = await searchParams;
+  const { clientId } = await params;
+  const { month: monthParam, account: accountParam } = await searchParams;
   const supabase = await createClient();
+
+  const accountId = await resolveAccountId(supabase, clientId, accountParam);
+
+  if (!accountId) {
+    return (
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        Nenhuma conta social ainda — faça o primeiro upload na aba
+        &quot;Contas &amp; Upload&quot;.
+      </p>
+    );
+  }
 
   const month = await resolveMonth(supabase, accountId, monthParam);
 

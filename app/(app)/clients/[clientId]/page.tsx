@@ -6,5 +6,5 @@ export default async function ClientPage({
   params: Promise<{ clientId: string }>;
 }) {
   const { clientId } = await params;
-  redirect(`/clients/${clientId}/dados`);
+  redirect(`/clients/${clientId}/visao-geral`);
 }

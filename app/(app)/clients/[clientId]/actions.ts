@@ -87,7 +87,7 @@ async function uploadFollowers(
     return { error: "Não foi possível salvar os dados de seguidores." };
   }
 
-  revalidatePath(`/clients/${clientId}/accounts/${accountId}`);
+  revalidatePath(`/clients/${clientId}/visao-geral`);
   return { error: null };
 }
 
@@ -110,7 +110,7 @@ async function uploadAudience(
     return { error: "Não foi possível salvar os dados de público." };
   }
 
-  revalidatePath(`/clients/${clientId}/accounts/${accountId}`);
+  revalidatePath(`/clients/${clientId}/visao-geral`);
   return { error: null };
 }
 
@@ -209,6 +209,7 @@ async function uploadPosts(
     return { error: "Não foi possível salvar os posts do relatório." };
   }
 
-  revalidatePath(`/clients/${clientId}`);
-  redirect(`/clients/${clientId}/accounts/${accountId}`);
+  revalidatePath(`/clients/${clientId}/visao-geral`);
+  revalidatePath(`/clients/${clientId}/posts`);
+  redirect(`/clients/${clientId}/visao-geral?account=${accountId}`);
 }

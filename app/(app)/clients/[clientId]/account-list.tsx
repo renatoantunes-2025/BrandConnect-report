@@ -48,7 +48,7 @@ export function AccountList({
           {filtered.map((account) => (
             <li key={account.id}>
               <Link
-                href={`/clients/${clientId}/accounts/${account.id}`}
+                href={`/clients/${clientId}/visao-geral?account=${account.id}`}
                 className="flex items-center justify-between rounded-lg border border-black/10 bg-white p-4 shadow-sm transition-colors hover:border-zinc-400 dark:border-white/10 dark:bg-zinc-900"
               >
                 <div>

@@ -58,8 +58,11 @@ function Sparkline({ points }: { points: number[] }) {
     })
     .join(" ");
 
+  const lastPoint = coords.split(" ").at(-1);
+  const [lastX, lastY] = (lastPoint ?? "0,0").split(",").map(Number);
+
   return (
-    <svg width={width} height={height} className="mt-1">
+    <svg width={width} height={height} className="mt-2 overflow-visible">
       <polyline
         points={coords}
         fill="none"
@@ -68,20 +71,27 @@ function Sparkline({ points }: { points: number[] }) {
         strokeLinecap="round"
         className="stroke-[#2a78d6] dark:stroke-[#3987e5]"
       />
+      <circle
+        cx={lastX}
+        cy={lastY}
+        r={3}
+        strokeWidth={2}
+        className="fill-[#2a78d6] stroke-white dark:fill-[#3987e5] dark:stroke-zinc-900"
+      />
     </svg>
   );
 }
 
 export function OverviewStats({ tiles }: { tiles: StatTileInput[] }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       {tiles.map((tile) => (
         <div
           key={tile.label}
-          className="rounded-lg border border-black/10 bg-white p-4 dark:border-white/10 dark:bg-zinc-900"
+          className="rounded-xl border border-black/10 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-zinc-900"
         >
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">{tile.label}</p>
-          <p className="mt-1 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{tile.label}</p>
+          <p className="mt-1.5 text-[27px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
             {tile.kind === "percent" ? `${tile.value.toFixed(1)}%` : formatCompact(tile.value)}
           </p>
           <p className="mt-1 text-xs">
